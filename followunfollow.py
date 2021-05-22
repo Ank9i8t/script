@@ -106,11 +106,13 @@ class instagramBot:
 
 
 
-insta = instagramBot('foodnf2021','lenten.wimple')
+insta = instagramBot('Your_username','YOUR_PASSWORD')
 insta.login()
 time.sleep(randint(3,4))
 insta.findMyFollowers()
 if input('want to unfollow who unfollowed you.--> yes/no') == 'yes':
     insta.unfollow()
+else:
+    print('Why you wasted my time')
 
 insta.bot.close()
