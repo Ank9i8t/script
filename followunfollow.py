@@ -39,9 +39,11 @@ class instagramBot:
         popup = bot.find_element_by_class_name('isgrP')
 
         followers_array=[]
-
+        tot_follow = total_follower[1].text
+         
+        tot_follow = ''.join(tot_follow.split(','))
         i=1
-        while i <= int(total_follower[1].text):
+        while i <= int(tot_follow):
             bot.execute_script('arguments[0].scrollTop = arguments[0].scrollHeight',popup)
             time.sleep(randint(1,2))
 
@@ -51,7 +53,7 @@ class instagramBot:
                 if follower not in followers_array:
                     followers_array.append(follower.text)
                     i+=1
-                if i> int(total_follower[1].text):
+                if i> int(tot_follow):
                     break
         try:
             prev_follower_df = pd.read_csv('file/follower_list.csv')
@@ -82,7 +84,7 @@ class instagramBot:
                 for item in follower_df['followers']:
                     if item == 'followers':
                         continue
-                    bot.get('https://inst:agram.com/'+item)
+                    bot.get('https://instagram.com/'+item)
                     tmp_list.append(item)
                     
                     bot.find_element_by_class_name('_6VtSN').click()
@@ -97,7 +99,7 @@ class instagramBot:
             follower_df = follower_df[~follower_df['followers'].isin(unfollowed_df['followers'])]
             follower_df['followers'].to_csv('file/unfollowers.csv',mode='w')
             if not unfollowed_df['followers'].empty:
-                print('Unfollowed {} people in list below',i+1)
+                print('Unfollowed {} people in list below'.format(i))
                 print(unfollowed_df['followers'])
             else:
                 print('No unfollowers')
